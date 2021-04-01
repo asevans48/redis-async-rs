@@ -71,7 +71,7 @@ impl error::Error for Error {
     fn description(&self) -> &str {
         match *self {
             Error::Internal(ref s) => s,
-            Error::IO(ref err) => err.description(),
+            Error::IO(ref _err) => "IO Error",
             Error::RESP(ref s, _) => s,
             Error::Remote(ref s) => s,
             Error::Connection(ConnectionReason::Connected) => "Connection already established",
@@ -98,8 +98,7 @@ impl error::Error for Error {
 
 impl fmt::Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        use std::error::Error;
-        fmt::Display::fmt(self.description(), f)
+        fmt::Display::fmt(self.to_string().as_str(), f)
     }
 }
 
